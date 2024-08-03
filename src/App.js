@@ -1,7 +1,31 @@
 import logo from './logo.svg';
 import './App.css';
+import React ,{Component} from'react'
+class App extends Component{
+  constructor() {
+    super()
+    this.state = {
+        loading: false,
+        character: {}
+    }
+}
 
-function App() {
+componentDidMount() {
+    this.setState({loading: true})
+    fetch("https://wolnelektury.pl/api/kinds/dramat/")
+        .then(response => response.json())
+        .then(data => {
+            this.setState({
+              loading:false,
+                character: data
+            })
+        })
+}
+
+
+render ()
+{
+  const text = this.state.loading ? "loading..." : this.state.character.name
   return (
     <div className="App">
       <header className="App-header">
@@ -15,11 +39,12 @@ function App() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Learn React
+          hello
         </a>
+        <p>{text}</p>
       </header>
     </div>
   );
 }
-
+}
 export default App;
